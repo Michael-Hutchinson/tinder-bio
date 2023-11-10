@@ -1,16 +1,11 @@
 'use client';
 
-import { useChat } from 'ai/react';
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { FaGithub, FaInternetExplorer } from 'react-icons/fa';
-import { TbBrandTinder } from 'react-icons/tb';
-import Header from './components/Header/Header';
-import TextArea from './components/Inputs/TextArea/TextArea';
-import { WritingStyleProps } from './types';
-import SelectField from './components/Inputs/SelectField/SelectField';
-import Footer from './components/Footer/Footer';
-import Button from './components/Button/Button';
 import Bio from './components/Bio/Bio';
+import Button from './components/Button/Button';
+import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header';
+import SelectField from './components/Inputs/SelectField/SelectField';
+import TextArea from './components/Inputs/TextArea/TextArea';
 import { useTinderBio } from './hooks/useTinderBio';
 
 export default function Home() {
