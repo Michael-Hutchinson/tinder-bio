@@ -8,31 +8,21 @@ import Header from './components/Header/Header';
 import TextArea from './components/Inputs/TextArea/TextArea';
 import { WritingStyleProps } from './types';
 import SelectField from './components/Inputs/SelectField/SelectField';
+import Footer from './components/Footer/Footer';
+import Button from './components/Button/Button';
+import Bio from './components/Bio/Bio';
+import { useTinderBio } from './hooks/useTinderBio';
 
 export default function Home() {
-  const [tinderBio, setTinderBio] = useState('');
-  const [writingStyle, setWritingStyle] = useState<WritingStyleProps>();
-
-  const { input, handleInputChange, handleSubmit, isLoading, messages } =
-    useChat({
-      body: {
-        writingStyle,
-        tinderBio,
-      },
-    });
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    handleSubmit(e);
-  };
-
-  const onInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    handleInputChange(e);
-    setTinderBio(e.target.value);
-  };
-
-  const aiMessage = messages[messages.length - 1];
-  const generatedBios =
-    aiMessage?.role === 'assistant' ? aiMessage.content : null;
+  const {
+    writingStyle,
+    setWritingStyle,
+    input,
+    onInputChange,
+    onSubmit,
+    isLoading,
+    generatedBios,
+  } = useTinderBio();
 
   return (
     <div className='flex flex-col min-h-screen gap-8'>
@@ -42,6 +32,7 @@ export default function Home() {
         <h3 className='text-2xl'>
           Let AI take the guesswork out of creating the perfect bio.
         </h3>
+
         <form className='flex flex-col gap-8' onSubmit={onSubmit}>
           <TextArea input={input} onInputChange={onInputChange} />
 
@@ -50,69 +41,12 @@ export default function Home() {
             setWritingStyle={setWritingStyle}
           />
 
-          <button className='btn' type='submit' disabled={isLoading}>
-            {isLoading ? (
-              <span className='loading loading-infinity loading-lg'></span>
-            ) : (
-              'Create your bio 👉'
-            )}
-          </button>
+          <Button isLoading={isLoading} />
         </form>
 
-        <output>
-          {generatedBios && (
-            <>
-              {generatedBios
-                .substring(generatedBios.indexOf('1') + 3)
-                .split('2.')
-                .map((generatedBio, index) => (
-                  <div key={index} className='chat chat-start'>
-                    <div className='chat-header'>
-                      Cupid{' '}
-                      <time className='text-xs opacity-50'>1 second ago</time>
-                    </div>
-                    <div
-                      className='chat-bubble'
-                      onClick={() => {
-                        navigator.clipboard.writeText(generatedBio);
-                      }}
-                    >
-                      {generatedBio}
-                    </div>
-                    <div className='chat-footer opacity-50'>Seen</div>
-                  </div>
-                ))}
-            </>
-          )}
-        </output>
+        <Bio generatedBios={generatedBios} />
       </main>
-      <footer className='footer footer-center p-10 bg-primary text-primary-content'>
-        <aside>
-          <TbBrandTinder size={50} />
-          <p>
-            Powered by{' '}
-            <a
-              className='font-bold link'
-              href='https://openai.com/blog/chatgpt'
-              target='_blank'
-            >
-              ChatGPT
-            </a>
-            .
-          </p>
-          <p>Copyright © 2023 - All right reserved</p>
-        </aside>
-        <nav>
-          <div className='grid grid-flow-col gap-4'>
-            <a href='https://github.com/Michael-Hutchinson' target='_blank'>
-              <FaGithub size={25} />
-            </a>
-            <a href='https://michaelhutchinson.me' target='_blank'>
-              <FaInternetExplorer size={25} />
-            </a>
-          </div>
-        </nav>
-      </footer>
+      <Footer />
     </div>
   );
 }
