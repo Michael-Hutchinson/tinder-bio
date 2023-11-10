@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { FaGithub, FaInternetExplorer } from 'react-icons/fa';
 import { SiTinder } from 'react-icons/si';
 import { TbBrandTinder } from 'react-icons/tb';
+import Header from './components/Header/Header';
 
 type WritingStyleProps = 'Serious' | 'Funny' | 'Clever';
 
@@ -35,34 +36,31 @@ export default function Home() {
 
   return (
     <div className='flex flex-col min-h-screen gap-8'>
-      <header>
-        <div className='navbar bg-base-100'>
-          <a className='btn btn-ghost normal-case text-xl'>
-            <TbBrandTinder size={50} /> tinderbio.io
-          </a>
-        </div>
-        <div className='flex flex-col w-full'>
-          <div className='divider'></div>
-        </div>
-      </header>
+      <Header title='tinderBio.io' />
       <main className='prose text-center flex flex-col justify-center items-center container flex-grow gap-8'>
-        <h1>Transform Your Tinder Game</h1>
-        <h2>Let AI take the guesswork out of creating the perfect bio.</h2>
+        <h2 className='sm:text-6xl text-4xl'>Transform Your Tinder Game</h2>
+        <h3 className='text-2xl'>
+          Let AI take the guesswork out of creating the perfect bio.
+        </h3>
         <form className='flex flex-col gap-8' onSubmit={onSubmit}>
           <div className='form-control'>
             <label className='label'>
               <span className='label-text'>
-                <strong>Step 1.</strong> Copy your current bio (or just write
-                some keywords)
+                <strong>Step 1.</strong> Copy your current tinder bio
               </span>
             </label>
             <textarea
-              className='textarea textarea-bordered textarea-lg w-full max-w-xs'
+              className='textarea textarea-bordered h-24'
               placeholder='e.g. Young professional looking for a partner in crime'
               defaultValue={input}
               onChange={onInputChange}
               required
             ></textarea>
+            <label className='label'>
+              <span className='label-text-alt'>
+                You can just add keywords here
+              </span>
+            </label>
           </div>
 
           <div className='form-control'>
@@ -72,7 +70,7 @@ export default function Home() {
               </span>
             </label>
             <select
-              className='select select-bordered select-lg w-full max-w-xs'
+              className='select select-bordered'
               defaultValue={writingStyle || ''}
               onChange={(e) =>
                 setWritingStyle(e.target.value as WritingStyleProps)
