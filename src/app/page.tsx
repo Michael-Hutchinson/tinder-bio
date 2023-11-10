@@ -11,7 +11,6 @@ export default function Home() {
 
   const { input, handleInputChange, handleSubmit, isLoading, messages } =
     useChat({
-      api: '/api/chat',
       body: {
         writingStyle,
         tinderBio,
@@ -19,7 +18,6 @@ export default function Home() {
     });
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     handleSubmit(e);
   };
 
@@ -28,17 +26,20 @@ export default function Home() {
     setTinderBio(e.target.value);
   };
 
-  const aiMessage = messages[messages.length - 1]?.content;
+  const aiMessage = messages[messages.length - 1];
+  const generatedBios =
+    aiMessage?.role === 'assistant' ? aiMessage.content : null;
 
   return (
     <main>
-      <form onSubmit={onSubmit}>
+      <form className='mx-auto max-w-sm space-y-4' onSubmit={onSubmit}>
         <textarea
           defaultValue={input}
           onChange={onInputChange}
           rows={4}
+          required
           placeholder={
-            'Enter your exiting tinder bio or leave blank for a random one'
+            'Enter your exiting tinder bio or enter some keywords about yourself.'
           }
         />
 
@@ -61,7 +62,7 @@ export default function Home() {
 
       <hr className='h-px bg-gray-700 border-1 dark:bg-gray-700' />
       <output className='space-y-10 my-10'>
-        {aiMessage && (
+        {generatedBios && (
           <>
             <div>
               <h2 className='sm:text-4xl text-3xl font-bold text-slate-900 mx-auto'>
@@ -69,8 +70,8 @@ export default function Home() {
               </h2>
             </div>
             <div className='space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto'>
-              {aiMessage
-                .substring(aiMessage.indexOf('1') + 3)
+              {generatedBios
+                .substring(generatedBios.indexOf('1') + 3)
                 .split('2.')
                 .map((generatedBio, index) => (
                   <div
