@@ -51,7 +51,11 @@ export default function Home() {
           />
 
           <button className='btn' type='submit' disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'Create your bio 👉'}
+            {isLoading ? (
+              <span className='loading loading-infinity loading-lg'></span>
+            ) : (
+              'Create your bio 👉'
+            )}
           </button>
         </form>
 
