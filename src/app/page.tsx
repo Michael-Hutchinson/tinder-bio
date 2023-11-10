@@ -3,7 +3,6 @@
 import { useChat } from 'ai/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { FaGithub, FaInternetExplorer } from 'react-icons/fa';
-import { SiTinder } from 'react-icons/si';
 import { TbBrandTinder } from 'react-icons/tb';
 import Header from './components/Header/Header';
 
