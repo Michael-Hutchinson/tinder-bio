@@ -28,13 +28,9 @@ export async function POST(req: Request) {
       messages: [
         {
           role: 'user',
-          content: `Generate 2 ${writingStyle} tinder biographies. Make sure each response is less than 500 characters. ${
-            tinderBio
-              ? `You can use their existing bio as a starting point: ${tinderBio}${
-                  tinderBio.slice(-1) === '.' ? '' : '.'
-                }`
-              : ''
-          }. Make sure each response is clearly labeled "1." and "2." and make sure you dont include any special characters or numbers in the response.`,
+          content: `Generate 2 ${writingStyle} tinder biographies. Make sure each response is less than 500 characters. Make sure each response is clearly labeled "1." and "2." and make sure you dont include any special characters or numbers in the response. You can use their existing bio as a starting point: ${tinderBio}${
+            tinderBio.slice(-1) === '.' ? '' : '.'
+          }`,
         },
       ],
     });
